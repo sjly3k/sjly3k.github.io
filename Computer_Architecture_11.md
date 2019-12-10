@@ -107,5 +107,16 @@
     (# of Data memory access) * D-cache miss rate * D-cache miss penalty
   
   
+  ### Source of misses
+    1. Compulsory misses : block으로의 첫 접근에 의해 발생
+      - Block size를 키움으로써 해결 가능
+      - 하지만, 블록 size를 키우면 cache block의 개수가 감소하므로 miss penalty와 miss rate가 증가함.
+    2. Capacity misses : Cache의 한정된 용량에 의해 발생
+      - Cache size를 키움으로써 해결 가능
+      - 하지만, 접근 시간과 비용을 증가시킴
+    3. Conflict misses : Non-fully Associative Cache에서 set 위치 결정 경쟁에 의해 발생
+      - Associativity 증가를 통해 해결 가능
+      - 하지만, 연관이 증가할수록 접근 시간과 비용이 증가
+  
   
 
