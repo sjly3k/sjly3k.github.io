@@ -68,6 +68,8 @@
       1. CPU pipeline에 stall(bubble)이 발생한다.
       2. Lower-level로 부터 필요한 Data를 복사해와야 한다. (main memory)
       3. Stall이 발생한 Task를 실행한다.
+      
+      
         - IF stage stall : Instruction Fetch 재시작
         - MEM stage stall : Data Access 마무리
         
