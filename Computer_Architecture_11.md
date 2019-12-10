@@ -1,9 +1,10 @@
 ## [컴퓨터구조] Cache Overview
 
 ### 목표
-  1. 너비 우선 탐색의 개념
-  2. 너비 우선 탐색의 특징
-  3. 너비 우선 탐색의 구현 
+  1. Cache 등장 배경 이해
+  2. 계층화 메모리 이해
+  3. Cache Miss와 Write를 Handling하는 방법 이해
+  4. Cache 성능 측정 방법 
   
   
 ### Cache의 등장 배경
@@ -64,17 +65,45 @@
 ### Handling Cache Miss
   - 일반적으로 Cache Hit이 발생하면, Clock Cycle = 1이다.
   - 하지만, Cache Miss가 발생하면 Clock Cycle은 증가한다.
-    - 1. CPU pipeline에 stall(bubble)이 발생한다.
-    - 2. Lower-level로 부터 필요한 Data를 복사해와야 한다. (main memory)
-    - 3. Stall이 발생한 Task를 실행한다.
-      - IF stage stall : Instruction Fetch 재시작
-      - MEM stage stall : Data Access 마무리
+      1. CPU pipeline에 stall(bubble)이 발생한다.
+      2. Lower-level로 부터 필요한 Data를 복사해와야 한다. (main memory)
+      3. Stall이 발생한 Task를 실행한다.
+        - IF stage stall : Instruction Fetch 재시작
+        - MEM stage stall : Data Access 마무리
+        
+### Handling Writes
+  - Processor로 부터 SW (store)라는 Memory Write 명령어가 들어온다면 어떻게 해야할까?
+  - Write-through : Cache와 Main Memory (lower-level memory)에 동시에 새로운 데이터를 Update한다.
+    - 장점 : Cache와 Main Memory 사이의 Consistency가 보장된다. | 쉽게 실행할 수 있다.
+    - 단점 : Write-back에 비해 느리다.
+  - Write-back : Just Update Cache || Dirty Bit = 1인 Cache에 Write operation이 발생할 때, Main Memory에 복사한다.
+    - 장점 : Write-through에 비해 빠르다. 
+    - 단점 : Cache와 Main Memory 사이의 Consistency가 보장되지 않는다. | 실행하기 복잡하다.
     
-
-
-   
-
-* Post1
-* Post2
-* Post3
+  - Cache는 Write-through의 느린 속도를 보완하기 위해 Write Buffer를 제공한다.
+    - 이 Write buffer는 Main memory보다 접근 속도가 빠르다.
+    - Main memory에 write해야 하는 data를 write buffer에 먼저 적는다.
+    - Processor가 프로그램을 대기없이 계속 실행한다면, write buffer의 data가 main memory로 이동한다.
+    - 만약, write buffer가 꽉 찬다면?
+      - Write Buffer에 자리가 생길때까지 Stall이 발생한다.
+      
+  - Write Miss를 해결하는 방법
+    1. Write-allocate
+      - Fetch the block to cache
+      - Handle Write operation
+    2. Write-around
+      - Cacha에 Write하지 않고, Main memory의 블록 일부분만을 Update한다.
+      - 메모리 공간 초기화가 필요할 때 좋다.
+      
+ ### Cache 성능 측정 방법
+  - CPU time = clock cycles * clock periods = (CPU execution + Memory stall) clock cycles * clock periods
+  - Memory stall clock cycles = # of cache misses * miss penalty 
+  - (# of cache misses) = (# of memory accesses) * miss rate
+  - 실생활에서 우리는 Instruction용 I-cache와 Data용 D-cache를 사용한다. 따라서 식은 다음과 같이 바뀐다.
+  - (# of Instruction memory access) * I-cache miss rate * I-cache miss penalty + 
+    
+    (# of Data memory access) * D-cache miss rate * D-cache miss penalty
+  
+  
+  
 
