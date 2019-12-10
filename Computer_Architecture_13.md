@@ -2,10 +2,10 @@
 
 
 ### 목표
-  1. Cache 등장 배경 이해
-  2. 계층화 메모리 이해
-  3. Cache Miss와 Write를 Handling하는 방법 이해
-  4. Cache 성능 측정 방법 
+  1. Virtual Memory 등장 배경 이해
+  2. Virtual Memory 이해
+  3. Integrating Cache, TLB, Memory
+  4. Page Fault가 발생할때 대처법 이해
   
   
 ### Virtual Memory의 등장 배경
